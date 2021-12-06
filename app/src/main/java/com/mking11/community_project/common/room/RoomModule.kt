@@ -12,12 +12,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RoomModule {
-    @Singleton
-    @Provides
-    fun providesCommunityDb(@ApplicationContext context: Context): CommunityDatabase {
-        return Room.databaseBuilder(context, CommunityDatabase::class.java, CommunityDatabase.DataBaseName)
-            .fallbackToDestructiveMigration().build()
-    }
-
+//    @Singleton
+//    @Provides
+//    fun providesCommunityDb(@ApplicationContext context: Context): CommunityDatabase {
+//        return Room.databaseBuilder(context, CommunityDatabase::class.java, CommunityDatabase.DataBaseName)
+//            .fallbackToDestructiveMigration().build()
+//    }
+//
 
 }
