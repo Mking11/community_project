@@ -10,11 +10,12 @@ class CourseViewHolder(binding: CourseListItemBinding) : RecyclerView.ViewHolder
 
     private val photo = binding.imageView
     private val title = binding.textView2
-
+    private val price = binding.price
     fun bind(courseDetailsDto: CourseDetailsDto?) {
         if (courseDetailsDto != null) {
             photo.load(courseDetailsDto.image_480x270)
             title.text = courseDetailsDto.title
+            price.text = courseDetailsDto.price
         }
     }
 }

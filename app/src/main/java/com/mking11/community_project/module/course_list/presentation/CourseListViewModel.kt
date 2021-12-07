@@ -1,9 +1,11 @@
 package com.mking11.community_project.module.course_list.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDto
 import com.mking11.community_project.module.course_list.domain.model.CourseListUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +31,7 @@ class CourseListViewModel @Inject constructor(
                     subCategory = null
                 )
             }
-        ).flow
+        ).flow.cachedIn(viewModelScope)
 
     }
 }

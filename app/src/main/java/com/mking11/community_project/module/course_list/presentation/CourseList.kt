@@ -1,13 +1,13 @@
 package com.mking11.community_project.module.course_list.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mking11.community_project.R
 import com.mking11.community_project.databinding.FragmentCoruseListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -20,6 +20,7 @@ class CourseList : Fragment() {
     private lateinit var courseListBinding: FragmentCoruseListBinding
 
     val courseListViewModel: CourseListViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +45,20 @@ class CourseList : Fragment() {
                 adapter.submitData(it)
             }
         }
+        setHasOptionsMenu(true)
 
         return courseListBinding.root
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.top_menu, menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 
 
