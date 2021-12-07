@@ -1,10 +1,10 @@
 package com.mking11.community_project.module.course_list.data.repository
 
 import com.mking11.community_project.common.utils.AppResult
-import com.mking11.community_project.module.course_list.domain.model.CourseList
+import com.mking11.community_project.module.course_list.domain.model.CourseListDto
 import kotlinx.coroutines.flow.Flow
 
-interface CourseListRepostiory {
+interface CourseListRepository {
     fun getCourseListRemote(
         page: Int,
         pageSize: Int,
@@ -12,10 +12,10 @@ interface CourseListRepostiory {
         subCategory: String?,
         price: String?,
         language: String?
-    ): Flow<AppResult<CourseList>>
+    ): Flow<AppResult<CourseListDto>>
 
     fun insertCoursesToDb(
-        courseCourseList: CourseList
+        courseCourseListDto: CourseListDto
     )
 
 }
