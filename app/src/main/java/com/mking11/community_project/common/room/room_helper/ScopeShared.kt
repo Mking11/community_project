@@ -1,5 +1,6 @@
 package com.mking11.community_project.common.room.room_helper
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,14 +13,14 @@ class ScopeShared<T>(
     val scope: CoroutineScope = CoroutineScope(Dispatchers.IO),
 ) {
     val handler = CoroutineExceptionHandler { _, e ->
-//        firebaseCrash.setErrorToFireBase(e, " ${childClass.canonicalName}  ${childClass.name} : ")
+        Log.e("ScopeCoroutineException", "${childClass.name}.kt: ")
     }
 
     fun closeRepo() {
         try {
             scope.cancel()
         } catch (e: Exception) {
-//            firebaseCrash.setErrorToFireBase(e, "${childClass.name} .kt : ")
+            Log.e("ScopeError", "${childClass.name} .kt : ")
         }
     }
 

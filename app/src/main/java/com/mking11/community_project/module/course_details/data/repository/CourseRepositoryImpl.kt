@@ -13,6 +13,7 @@ import com.mking11.community_project.module.course_details.domain.model.CourseDe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class CourseRepositoryImpl(
     private val courseDao: CourseDao,
@@ -21,9 +22,10 @@ class CourseRepositoryImpl(
     DaoEssentialsRepositoryImpl<CourseDetailsDbo, String> {
 
     private val scope = ScopeShared(this.javaClass, CoroutineScope(Dispatchers.IO))
-    override fun insertCourse(courseDetailsDto: CourseDetailsDto) {
+    override suspend fun insertCourse(courseDetailsDto: CourseDetailsDto) {
         super.insertOrUpdate(courseDetailsDto.toDbo(), scope.scope, scope.handler, courseDao)
     }
+
 
     override fun getCoursePaging(): PagingSource<Int, CourseDetailsDbo> {
         return courseDao.getCourses()
@@ -34,5 +36,11 @@ class CourseRepositoryImpl(
             courseDetailsService.getCourseDetails(id)
         }
 
+    }
+
+    override suspend fun clearCourseTable() {
+        scope.scope.launch {
+            courseDao.clear()
+        }
     }
 }

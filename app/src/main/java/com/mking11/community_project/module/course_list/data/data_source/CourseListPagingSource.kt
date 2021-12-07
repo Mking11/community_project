@@ -13,6 +13,7 @@ class CourseListPagingSource(
     private val pageSize: Int,
     private val category: String? = null,
     private val subCategory: String? = null,
+    private val search:String?=null,
     private val price: String = "price-free",
     private val language: String = "en",
     private val courseListRepository: CourseListRepository
@@ -34,6 +35,7 @@ class CourseListPagingSource(
                     pageSize,
                     category,
                     subCategory,
+                    search,
                     price,
                     language
                 )

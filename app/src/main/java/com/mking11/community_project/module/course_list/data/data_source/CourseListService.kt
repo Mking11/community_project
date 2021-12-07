@@ -15,6 +15,7 @@ interface CourseListService {
         @Query("page_size") pageSize: Int?,
         @Query("category") category: String?,
         @Query("subcategory") subCategory: String?,
+        @Query("search") search:String?,
         @Query("price") price: String?,
         @Query("language") language: String? = "en"
     ): Response<CourseListDto>

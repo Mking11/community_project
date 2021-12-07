@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "CourseIndex")
-class CourseIndexDbo(
+class CourseRemoteIndexDbo(
     @PrimaryKey
-    val lastRequestId: String,
+    val id:Int,
     val prevKey: Int?,
     val nextKey: Int?
 )

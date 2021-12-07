@@ -22,4 +22,6 @@ abstract class CourseDao : IDaoEssentialsRepository<CourseDetailsDbo, String> {
     @Query("Select *From course ")
     abstract fun getCourses(): PagingSource<Int, CourseDetailsDbo>
 
+
+
 }
