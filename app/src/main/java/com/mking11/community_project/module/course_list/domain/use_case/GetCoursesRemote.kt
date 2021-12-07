@@ -1,9 +1,7 @@
 package com.mking11.community_project.module.course_list.domain.use_case
 
-import com.mking11.community_project.common.utils.AppResult
+import com.mking11.community_project.module.course_list.data.data_source.CourseListPagingSource
 import com.mking11.community_project.module.course_list.data.repository.CourseListRepository
-import com.mking11.community_project.module.course_list.domain.model.CourseListDto
-import kotlinx.coroutines.flow.Flow
 
 class GetCoursesRemote(private val courseListRepository: CourseListRepository) {
 
@@ -14,14 +12,13 @@ class GetCoursesRemote(private val courseListRepository: CourseListRepository) {
         subCategory: String?,
         price: String?,
         language: String?
-    ): Flow<AppResult<CourseListDto>> {
-        return courseListRepository.getCourseListRemote(
-            page,
+    ): CourseListPagingSource {
+        val result = CourseListPagingSource(
             pageSize,
             category,
             subCategory,
-            price,
-            language
+            courseListRepository = courseListRepository
         )
+        return result
     }
 }

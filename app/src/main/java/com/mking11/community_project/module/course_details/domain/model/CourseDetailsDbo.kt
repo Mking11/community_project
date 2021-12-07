@@ -12,7 +12,7 @@ data class CourseDetailsDbo(
     val url: String? = null,
     val is_paid: Boolean? = null,
     val price: String? = null,
-    val price_detail: String? = null,
+//    val price_detail: String? = null,
     val price_serve_tracking_id: String? = null,
     val image_125_H: String? = null,
     val image_240x135: String? = null,

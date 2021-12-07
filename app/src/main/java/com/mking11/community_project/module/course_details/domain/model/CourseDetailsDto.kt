@@ -7,7 +7,7 @@ data class CourseDetailsDto (
 	val url : String?=null,
 	val is_paid : Boolean?=null,
 	val price : String?=null,
-	val price_detail : String?=null,
+//	val price_detail : String?=null,
 	val price_serve_tracking_id : String?=null,
 	val visible_instructors : List<VisibleInstructorsDto>?=null,
 	val image_125_H : String?=null,
@@ -28,7 +28,7 @@ data class CourseDetailsDto (
 ) {
 	fun toDbo(): CourseDetailsDbo {
 		return CourseDetailsDbo(
-			_class, id, title, url, is_paid, price, price_detail, price_serve_tracking_id, image_125_H, image_240x135, is_practice_test_course, image_480x270, published_title, tracking_id, predictive_score, relevancy_score, input_features, lecture_search_result
+			_class, id, title, url, is_paid, price,  price_serve_tracking_id, image_125_H, image_240x135, is_practice_test_course, image_480x270, published_title, tracking_id, predictive_score, relevancy_score, input_features, lecture_search_result
 		)
 	}
 }

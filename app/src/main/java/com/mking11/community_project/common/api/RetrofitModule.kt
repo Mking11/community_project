@@ -1,7 +1,9 @@
 package com.mking11.community_project.common.api
 
+import android.media.session.MediaSession
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.mking11.community_project.common.api.domain.utils.TokenInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +33,7 @@ object RetrofitModule {
     fun providesOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder().connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS).build()
+            .writeTimeout(15, TimeUnit.SECONDS).addInterceptor(TokenInterceptor()).build()
     }
 
 
