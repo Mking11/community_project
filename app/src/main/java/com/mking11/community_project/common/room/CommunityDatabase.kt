@@ -4,15 +4,19 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.mking11.community_project.module.course_details.data.data_source.CourseDao
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
+import com.mking11.community_project.module.course_list.data.data_source.CourseIndexDao
+import com.mking11.community_project.module.course_list.domain.model.CourseRemoteIndexDbo
 
 @Database(
     entities = [
-        CourseDetailsDbo::class
+        CourseDetailsDbo::class,
+        CourseRemoteIndexDbo::class,
     ], version = 1, exportSchema = false
 )
 abstract class CommunityDatabase : RoomDatabase() {
 
     abstract val courseDao: CourseDao
+    abstract val courseIndexDao: CourseIndexDao
 
     companion object {
         val DataBaseName: String = "CommunityDatabase"

@@ -3,7 +3,7 @@ package com.mking11.community_project.module.course_list.presentation
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.mking11.community_project.databinding.CourseListItemBinding
-import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDto
+import com.mking11.community_project.module.course_details.domain.model.ICourseDetails
 
 class CourseViewHolder(binding: CourseListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -11,7 +11,7 @@ class CourseViewHolder(binding: CourseListItemBinding) : RecyclerView.ViewHolder
     private val photo = binding.imageView
     private val title = binding.textView2
     private val price = binding.price
-    fun bind(courseDetailsDto: CourseDetailsDto?) {
+    fun bind(courseDetailsDto: ICourseDetails?) {
         if (courseDetailsDto != null) {
             photo.load(courseDetailsDto.image_480x270)
             title.text = courseDetailsDto.title

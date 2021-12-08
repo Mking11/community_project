@@ -42,6 +42,8 @@ class CourseListPagingSource(
 
             if (response.isSuccessful && response.body() != null) {
                 val courses: List<CourseDetailsDto> = response.body()!!.results
+
+
                 val isAtEnd: Boolean = (page + pageSize) == response.body()!!.count
                 val nextKey = if (response.body()!!.results.isNullOrEmpty() || isAtEnd) {
                     null

@@ -1,20 +1,24 @@
 package com.mking11.community_project.module.course_list.data.repository
 
+import androidx.paging.PagingSource
 import com.madtechet.musica.common.room.room_helper.repositories.DaoBasicRepositoryImpl
 import com.mking11.community_project.common.api.domain.utils.apiCall
 import com.mking11.community_project.common.room.room_helper.ScopeShared
 import com.mking11.community_project.common.utils.AppResult
 import com.mking11.community_project.module.course_details.data.repository.CourseRepository
+import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDto
+import com.mking11.community_project.module.course_details.domain.model.ICourseDetails
 import com.mking11.community_project.module.course_list.data.data_source.CourseIndexDao
 import com.mking11.community_project.module.course_list.data.data_source.CourseListService
-import com.mking11.community_project.module.course_list.domain.model.CourseRemoteIndexDbo
 import com.mking11.community_project.module.course_list.domain.model.CourseListDto
+import com.mking11.community_project.module.course_list.domain.model.CourseRemoteIndexDbo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.util.*
 
 class CourseListRepositoryImpl(
     private val services: CourseListService,
@@ -42,13 +46,13 @@ class CourseListRepositoryImpl(
         return courseIndexDao.getCourseList(id)
     }
 
-    override suspend fun insertCourseListIndex(list: List<CourseRemoteIndexDbo>) {
+    override fun insertCourseListIndex(list: List<CourseRemoteIndexDbo>) {
         list.forEach {
             insertCourseList(it)
         }
     }
 
-    override suspend fun insertCourseList(
+    override fun insertCourseList(
         courseRemoteIndexDbo: CourseRemoteIndexDbo
     ) {
         super.insertOrUpdate(
@@ -57,6 +61,14 @@ class CourseListRepositoryImpl(
             scope.handler,
             courseIndexDao
         )
+    }
+
+    override fun getCourseBySearch(title: String): PagingSource<Int, CourseDetailsDbo> {
+        return courseRepository.getCoursePaging(title.lowercase(Locale.getDefault()))
+    }
+
+    override fun getCourses(): PagingSource<Int, CourseDetailsDbo> {
+        return courseRepository.getCoursePaging()
     }
 
     override suspend fun getCourseListRemoteResponse(
@@ -79,7 +91,7 @@ class CourseListRepositoryImpl(
         )
     }
 
-    override suspend fun insertList(list: List<CourseDetailsDto>) {
+    override fun insertList(list: List<CourseDetailsDto>) {
         list.forEach {
             courseRepository.insertCourse(it)
         }

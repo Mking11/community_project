@@ -1,9 +1,12 @@
 package com.mking11.community_project.module.course_list.data.repository
 
+import androidx.paging.PagingSource
 import com.mking11.community_project.common.utils.AppResult
+import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDto
-import com.mking11.community_project.module.course_list.domain.model.CourseRemoteIndexDbo
+import com.mking11.community_project.module.course_details.domain.model.ICourseDetails
 import com.mking11.community_project.module.course_list.domain.model.CourseListDto
+import com.mking11.community_project.module.course_list.domain.model.CourseRemoteIndexDbo
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
@@ -20,9 +23,15 @@ interface CourseListRepository {
 
     suspend fun getCourseListIndex(id: Int): CourseRemoteIndexDbo?
 
-    suspend fun insertCourseListIndex (list :List<CourseRemoteIndexDbo>)
+    fun insertCourseListIndex(list: List<CourseRemoteIndexDbo>)
 
-    suspend fun insertCourseList( courseRemoteIndexDbo: CourseRemoteIndexDbo)
+     fun insertCourseList(courseRemoteIndexDbo: CourseRemoteIndexDbo)
+
+    fun getCourseBySearch(title:String): PagingSource<Int, CourseDetailsDbo>
+
+    fun getCourses():PagingSource<Int,CourseDetailsDbo>
+
+
 
     suspend fun getCourseListRemoteResponse(
         page: Int,
@@ -34,7 +43,7 @@ interface CourseListRepository {
         language: String?
     ): Response<CourseListDto>
 
-    suspend fun insertList(list: List<CourseDetailsDto>)
-    suspend fun  clearTables()
+    fun insertList(list: List<CourseDetailsDto>)
+    suspend fun clearTables()
 
 }

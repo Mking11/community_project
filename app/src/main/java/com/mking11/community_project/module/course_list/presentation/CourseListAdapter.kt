@@ -5,29 +5,31 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.mking11.community_project.databinding.CourseListItemBinding
-import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDto
+import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
 
-class CourseListAdapter : PagingDataAdapter<CourseDetailsDto, CourseViewHolder>(REPO_COMPARATOR) {
+
+class CourseListAdapter : PagingDataAdapter<CourseDetailsDbo, CourseViewHolder>(REPO_COMPARATOR) {
 
     companion object {
-        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<CourseDetailsDto>() {
+        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<CourseDetailsDbo>() {
             override fun areItemsTheSame(
-                oldItem: CourseDetailsDto,
-                newItem: CourseDetailsDto
+                oldItem: CourseDetailsDbo,
+                newItem: CourseDetailsDbo
             ): Boolean =
                 oldItem.id == newItem.id
 
             override fun areContentsTheSame(
-                oldItem: CourseDetailsDto,
-                newItem: CourseDetailsDto
+                oldItem: CourseDetailsDbo,
+                newItem: CourseDetailsDbo
             ): Boolean =
-                oldItem == newItem
+                oldItem.title == newItem.title && oldItem.equals(newItem)
         }
     }
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null) {
+            holder.bind(item)
             holder.bind(item)
         }
     }

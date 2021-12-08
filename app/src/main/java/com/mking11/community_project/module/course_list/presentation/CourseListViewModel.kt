@@ -2,11 +2,8 @@ package com.mking11.community_project.module.course_list.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDto
+import androidx.paging.*
+import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
 import com.mking11.community_project.module.course_list.domain.model.CourseListUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -18,19 +15,25 @@ class CourseListViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    fun getCourseList(): Flow<PagingData<CourseDetailsDto>> {
+    @ExperimentalPagingApi
+    fun getCourseList(
+        search: String?,
+        pageSize: Int = 5,
+        category: String?,
+        subcategory: String?,
+        language: String = "en"
+    ): Flow<PagingData<CourseDetailsDbo>> {
+        val factory: () -> PagingSource<Int, CourseDetailsDbo> =
+            { courseListUseCases.getCoursesDatabase() }
         return Pager(
-            config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-            pagingSourceFactory = {
-                courseListUseCases.getCoursesRemote(
-                    1,
-                    20,
-                    language = "en",
-                    price = "price-free",
-                    category = null,
-                    subCategory = null
-                )
-            }
+            config = PagingConfig(pageSize = pageSize, enablePlaceholders = false),
+            remoteMediator = courseListUseCases.getCoursesRemoteMediator(
+                pageSize,
+                category,
+                subcategory,
+                search,
+                language = language
+            ), pagingSourceFactory = factory, initialKey = 1
         ).flow.cachedIn(viewModelScope)
 
     }
