@@ -99,7 +99,7 @@ class CourseListRemoteMediator(
                 println("is at an end $isAtEnd")
                 if (loadType == LoadType.REFRESH) {
                     println("clearing tables")
-                    courseListRepository.clearTables()
+//                    courseListRepository.clearTables()
                 }
 
                 val prevKey = if (page == COURSE_LIST_STARTING_PAGE_INDEX) null else page.minus(1)

@@ -18,7 +18,7 @@ class CourseListViewModel @Inject constructor(
     @ExperimentalPagingApi
     fun getCourseList(
         search: String?,
-        pageSize: Int = 5,
+        pageSize: Int = 100,
         category: String?,
         subcategory: String?,
         language: String = "en"
