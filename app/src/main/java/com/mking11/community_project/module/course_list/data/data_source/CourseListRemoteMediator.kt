@@ -109,7 +109,7 @@ class CourseListRemoteMediator(
 
 
                 val courseListIndex = courses.mapNotNull {
-                    it.id?.let { it1 -> CourseRemoteIndexDbo(it1, prevKey, nextKey) }
+                    it.id?.let { it1 -> CourseRemoteIndexDbo(it1, prevKey = prevKey,nextKey= nextKey) }
                 }
 
                 println("inserting courses $courses  courseIndex $courseListIndex")
