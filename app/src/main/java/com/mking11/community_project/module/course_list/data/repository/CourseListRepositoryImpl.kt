@@ -37,7 +37,7 @@ class CourseListRepositoryImpl(
         language: String?
     ): Flow<AppResult<CourseListDto>> {
         return apiCall {
-            services.getCourseList(page, pageSize, category, subCategory, search, price, language)
+            services.getCourseListReponse(page, pageSize, category, subCategory, search, price, language)
         }
 
     }
@@ -79,7 +79,7 @@ class CourseListRepositoryImpl(
         search: String?,
         price: String?,
         language: String?
-    ): Response<CourseListDto> {
+    ): CourseListDto {
         return services.getCourseList(
             page,
             pageSize,
@@ -98,12 +98,17 @@ class CourseListRepositoryImpl(
     }
 
 
-    override suspend fun clearTables() {
+    override suspend fun clearData() {
         scope.scope.launch {
-            courseIndexDao.clearCourseIndex()
             courseRepository.clearCourseTable()
         }
 
+    }
+
+    override suspend fun clearKeys() {
+        scope.scope.launch {
+            courseIndexDao.clearCourseIndex()
+        }
     }
 
 

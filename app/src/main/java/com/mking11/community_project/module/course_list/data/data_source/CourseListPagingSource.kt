@@ -29,7 +29,7 @@ class CourseListPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CourseDetailsDto> {
         return try {
             val page = params.key ?: COURSE_LIST_STARTING_PAGE_INDEX
-            val response: Response<CourseListDto> =
+            val response: CourseListDto? =
                 courseListRepository.getCourseListRemoteResponse(
                     page,
                     pageSize,
@@ -40,12 +40,12 @@ class CourseListPagingSource(
                     language
                 )
 
-            if (response.isSuccessful && response.body() != null) {
-                val courses: List<CourseDetailsDto> = response.body()!!.results
+            if ( response != null) {
+                val courses: List<CourseDetailsDto> = response.results
 
 
-                val isAtEnd: Boolean = (page + pageSize) == response.body()!!.count
-                val nextKey = if (response.body()!!.results.isNullOrEmpty() || isAtEnd) {
+                val isAtEnd: Boolean = (page + pageSize) == response!!.count
+                val nextKey = if (response!!.results.isNullOrEmpty() || isAtEnd) {
                     null
                 } else {
                     // initial load size = 3 * NETWORK_PAGE_SIZE

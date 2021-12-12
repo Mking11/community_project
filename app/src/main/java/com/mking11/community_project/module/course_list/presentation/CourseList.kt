@@ -10,6 +10,7 @@ import androidx.paging.flatMap
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mking11.community_project.R
 import com.mking11.community_project.databinding.FragmentCoruseListBinding
+import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,6 +45,16 @@ class CourseList : Fragment() {
         courseListBinding.button.setOnClickListener {
             adapter.retry()
         }
+
+        val newAdapter = CourseListItemAdapter(object : CourseListItemAdapter.CustomListeners {
+            override fun onItemSelected(course: CourseDetailsDbo) {
+
+            }
+
+        })
+
+
+        
 
 
         courseListBinding.button.visibility = View.GONE

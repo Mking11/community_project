@@ -41,9 +41,10 @@ interface CourseListRepository {
         search: String?,
         price: String?,
         language: String?
-    ): Response<CourseListDto>
+    ): CourseListDto
 
     fun insertList(list: List<CourseDetailsDto>)
-    suspend fun clearTables()
+    suspend fun clearData()
+    suspend fun clearKeys()
 
 }

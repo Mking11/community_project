@@ -9,6 +9,9 @@ import com.mking11.community_project.module.course_details.domain.model.CourseDe
 import com.mking11.community_project.module.course_list.data.repository.CourseListRepository
 import com.mking11.community_project.module.course_list.domain.model.CourseListDto
 import com.mking11.community_project.module.course_list.domain.model.CourseRemoteIndexDbo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
@@ -36,22 +39,10 @@ class CourseListRemoteMediator(
         val page: Int? = when (loadType) {
 
 
-            LoadType.REFRESH -> {
-                println("refresh")
+            LoadType.REFRESH -> null
+            LoadType.PREPEND ->{
+                    return MediatorResult.Success(endOfPaginationReached = true )
 
-                val courseRemoteIndex = getCourseRemoteIndexCurrentPosition(state)
-                println("refresh index $courseRemoteIndex")
-                courseRemoteIndex?.nextKey?.minus(1) ?: COURSE_LIST_STARTING_PAGE_INDEX
-
-            }
-            LoadType.PREPEND -> {
-                println("prepend")
-                val courseRemoteIndex = getCourseRemoteIndexForFirstItem(state)
-                println("first item index ${courseRemoteIndex?.prevKey} next key ${courseRemoteIndex?.nextKey}")
-                val prevKey = courseRemoteIndex?.prevKey
-                    ?: return MediatorResult.Success(endOfPaginationReached = courseRemoteIndex != null)
-
-                prevKey
             }
             LoadType.APPEND -> {
 
@@ -71,59 +62,71 @@ class CourseListRemoteMediator(
 
         try {
             println("page $page")
-            val response: Response<CourseListDto>? =
 
-                page?.let {
-                    courseListRepository.getCourseListRemoteResponse(
-                        it,
-                        pageSize,
-                        category,
-                        subCategory,
-                        search,
-                        price,
-                        language
-                    )
-                }
+
+            val response: CourseListDto? = page?.let {
+                courseListRepository.getCourseListRemoteResponse(
+                    it,
+                    pageSize,
+                    category,
+                    subCategory,
+                    search,
+                    price,
+                    language
+                )
+            }
 
 
 
             println("response $response")
-            if (response != null && response.isSuccessful) {
 
 
-                val courseSize: Int? = (response.body()?.count?.div(pageSize))
-                println("response BODY ${response.body()}")
-                println("count size $courseSize")
-                val courses: List<CourseDetailsDto> = response.body()!!.results
-                val isAtEnd: Boolean = page == courseSize
-                println("is at an end $isAtEnd")
+            val courseSize: Int? = (response?.count?.div(pageSize))
+            println("response BODY $response")
+            println("count size $courseSize")
+            val courses: List<CourseDetailsDto>? = response?.results
+            val isAtEnd: Boolean = response?.results?.isEmpty() == true
+            println("is at an end $isAtEnd")
+
+
+            val prevKey = if (page == COURSE_LIST_STARTING_PAGE_INDEX) null else page?.minus(1)
+            val nextKey = if (isAtEnd) null else page?.plus(1)
+
+            CoroutineScope(Dispatchers.IO).launch {
+
                 if (loadType == LoadType.REFRESH) {
                     println("clearing tables")
-//                    courseListRepository.clearTables()
+                    courseListRepository.clearKeys()
+                    courseListRepository.clearData()
+
                 }
-
-                val prevKey = if (page == COURSE_LIST_STARTING_PAGE_INDEX) null else page.minus(1)
-                val nextKey = if (isAtEnd) null else page.plus(1)
-
-//                CoroutineScope(Dispatchers.IO).launch {
-
-
-                val courseListIndex = courses.mapNotNull {
-                    it.id?.let { it1 -> CourseRemoteIndexDbo(it1, prevKey = prevKey,nextKey= nextKey) }
+                val courseListIndex = courses?.mapNotNull {
+                    it.id?.let { it1 ->
+                        CourseRemoteIndexDbo(
+                            it1,
+                            prevKey = prevKey,
+                            nextKey = nextKey
+                        )
+                    }
                 }
 
                 println("inserting courses $courses  courseIndex $courseListIndex")
+                if (courseListIndex != null) {
+                    courseListRepository.insertCourseListIndex(courseListIndex)
+                }
+                if (courses != null) {
 
-                courseListRepository.insertCourseListIndex(courseListIndex)
-                courseListRepository.insertList(courses)
+                    courseListRepository.insertList(courses)
+                }
 
-//                }
-
-
-                return MediatorResult.Success(endOfPaginationReached = isAtEnd)
-            } else {
-                return MediatorResult.Error(Throwable("response was null "))
             }
+
+
+
+
+            return MediatorResult.Success(endOfPaginationReached = isAtEnd)
+
+
         } catch (exception: IOException) {
             println("exception $exception")
             return MediatorResult.Error(exception)
@@ -136,25 +139,24 @@ class CourseListRemoteMediator(
     private suspend fun getCourseRemoteIndexForLastItem(state: PagingState<Int, CourseDetailsDbo>): CourseRemoteIndexDbo? {
 
 
-        return state.lastItemOrNull()?.let {
-            it.id?.let { it1 ->
-                println("fetch course Id $it")
-                courseListRepository.getCourseListIndex(it1)
-            }
+        return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { repo ->
+            println("fetch course Id $repo.id")
+            repo.id?.let { courseListRepository.getCourseListIndex(it) }
         }
-
     }
+
 
     private suspend fun getCourseRemoteIndexForFirstItem(state: PagingState<Int, CourseDetailsDbo>): CourseRemoteIndexDbo? {
 
         println("get course remote index for first item ${state.anchorPosition}")
-        return state.firstItemOrNull()?.let {   course ->
-            course.id?.let {
-                println("fetch course Id $it")
-                courseListRepository.getCourseListIndex(it)
-            }
+        return state.pages.firstOrNull() { it.data.isNotEmpty() }?.data?.firstOrNull()
+            ?.let { course ->
+                course.id?.let {
+                    println("fetch course Id $it")
+                    courseListRepository.getCourseListIndex(it)
+                }
 
-        }
+            }
 
 
     }
