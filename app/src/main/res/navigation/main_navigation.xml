@@ -9,5 +9,17 @@
         android:id="@+id/courseList"
         android:name="com.mking11.community_project.module.course_list.presentation.CourseList"
         android:label="fragment_coruse_list"
-        tools:layout="@layout/fragment_coruse_list" />
+        tools:layout="@layout/fragment_coruse_list" >
+        <action
+            android:id="@+id/action_courseList_to_courseDetailsFragment"
+            app:destination="@id/courseDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseDetailsFragment"
+        android:name="com.mking11.community_project.module.course_details.presentation.CourseDetailsFragment"
+        android:label="CourseDetailsFragment" >
+        <argument
+            android:name="course"
+            app:argType="com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo" />
+    </fragment>
 </navigation>

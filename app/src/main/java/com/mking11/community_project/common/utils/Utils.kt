@@ -1,6 +1,7 @@
 package com.mking11.community_project.common.utils
 
-import java.util.HashMap
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun String.toList(): List<String> {
     return try {
@@ -25,3 +26,10 @@ fun String.toMap(): HashMap<String, String> {
     return map
 
 }
+
+private val formatter: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+
+private val DateFormatter: SimpleDateFormat = SimpleDateFormat("yyMMddHHmmssZ", Locale.ENGLISH)
+private val timeFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
+
+fun getCurrentDate(): String = DateFormatter.format(Calendar.getInstance().time)

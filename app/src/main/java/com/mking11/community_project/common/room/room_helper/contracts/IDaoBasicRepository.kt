@@ -1,5 +1,6 @@
 package com.madtechet.musica.common.room.room_helper.contracts
 
+import com.mking11.community_project.common.room.room_helper.contracts.IDaoEssentialsRepository
 import kotlinx.coroutines.flow.Flow
 
 

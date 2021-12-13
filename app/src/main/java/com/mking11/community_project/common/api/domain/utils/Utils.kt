@@ -21,6 +21,7 @@ fun <T> convertErrorResponse(
 fun convertErrorResponse(
     error: ResponseBody? = null,
 ): ErrorResult? {
+    println("error called ${error}")
     return try {
         convertErrorResponse(error = error, convertedTo = ErrorResult::class.java)
     } catch (e: Exception) {

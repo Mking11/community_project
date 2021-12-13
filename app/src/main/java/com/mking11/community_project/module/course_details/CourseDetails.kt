@@ -5,6 +5,8 @@ import com.mking11.community_project.module.course_details.data.data_source.Cour
 import com.mking11.community_project.module.course_details.data.data_source.CourseDetailService
 import com.mking11.community_project.module.course_details.data.repository.CourseRepository
 import com.mking11.community_project.module.course_details.data.repository.CourseRepositoryImpl
+import com.mking11.community_project.module.course_details.domain.model.CourseDetailsUseCases
+import com.mking11.community_project.module.course_details.domain.use_case.GetCoursesDetailsRemote
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,8 +38,16 @@ object CourseDetails {
         dao: CourseDao,
         service: CourseDetailService
     ): CourseRepository {
-        return CourseRepositoryImpl(courseDao = dao,courseDetailsService = service)
+        return CourseRepositoryImpl(courseDao = dao, courseDetailsService = service)
     }
+
+
+    @Provides
+    @ViewModelScoped
+    fun provideCourseUseCases(
+        courseRepository: CourseRepository
+    ): CourseDetailsUseCases =
+        CourseDetailsUseCases(getCoursesDetailsRemote = GetCoursesDetailsRemote(courseRepository))
 
 
 }

@@ -5,19 +5,21 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.flatMap
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mking11.community_project.R
 import com.mking11.community_project.databinding.FragmentCoruseListBinding
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
+import com.mking11.community_project.module.course_list.domain.model.CourseListInteraction
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @OptIn(ExperimentalPagingApi::class)
 @AndroidEntryPoint
-class CourseList : Fragment() {
+class CourseList : Fragment(), CourseListInteraction {
 
 
     private lateinit var courseListBinding: FragmentCoruseListBinding
@@ -34,7 +36,7 @@ class CourseList : Fragment() {
         courseListBinding = FragmentCoruseListBinding.inflate(inflater, container, false)
 
 
-        adapter = CourseListAdapter()
+        adapter = CourseListAdapter(this)
 
         val recycler = courseListBinding.recyclerCourse
         recycler.layoutManager = LinearLayoutManager(requireContext())
@@ -42,37 +44,21 @@ class CourseList : Fragment() {
 
 
 
-        courseListBinding.button.setOnClickListener {
-            adapter.retry()
-        }
-
-        val newAdapter = CourseListItemAdapter(object : CourseListItemAdapter.CustomListeners {
-            override fun onItemSelected(course: CourseDetailsDbo) {
-
-            }
-
-        })
 
 
-        
+
+
+
+
 
 
         courseListBinding.button.visibility = View.GONE
         courseListBinding.progressBar.visibility = View.GONE
 
-        adapter.addLoadStateListener { loadState ->
 
-            println("load state $loadState")
-
-        }
         setHasOptionsMenu(true)
 
-        return courseListBinding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenResumed{
             courseListViewModel.getCourseList(
                 search = null, category = null, subcategory = null
             ).collectLatest {
@@ -81,7 +67,10 @@ class CourseList : Fragment() {
             }
         }
 
+        return courseListBinding.root
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -91,6 +80,11 @@ class CourseList : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCourseItemClicked(courseDetailsDbo: CourseDetailsDbo) {
+        requireView().findNavController()
+            .navigate(CourseListDirections.actionCourseListToCourseDetailsFragment(courseDetailsDbo))
     }
 
 

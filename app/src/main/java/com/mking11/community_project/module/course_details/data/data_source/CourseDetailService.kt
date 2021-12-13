@@ -9,8 +9,8 @@ interface CourseDetailService {
 
     //get /api-2.0/courses/433798/
 
-    @GET("/courses/{courseId}")
-    fun getCourseDetails(
+    @GET("courses/{courseId}")
+   suspend fun getCourseDetails(
         @Path(
             value = "courseId",
             encoded = true

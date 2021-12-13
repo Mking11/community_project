@@ -1,4 +1,4 @@
-package com.mking11.community_project.module.course_review
+package com.mking11.community_project.module.course_review.domain.model
 
 data class Result(
     val _class: String,

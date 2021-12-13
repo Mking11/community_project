@@ -13,7 +13,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 
 
@@ -28,6 +27,9 @@ class CourseListRemoteMediator(
     private val courseListRepository: CourseListRepository
 ) : RemoteMediator<Int, CourseDetailsDbo>() {
 
+    var prev: Int? = null
+    var next: Int? = null
+
     companion object {
         const val COURSE_LIST_STARTING_PAGE_INDEX = 1
     }
@@ -39,32 +41,34 @@ class CourseListRemoteMediator(
         val page: Int? = when (loadType) {
 
 
-            LoadType.REFRESH -> null
-            LoadType.PREPEND ->{
-                    return MediatorResult.Success(endOfPaginationReached = true )
+            LoadType.REFRESH -> {
+                println("refresh called")
+                null
+            }
+            LoadType.PREPEND -> {
+                println("prepend called")
+                return MediatorResult.Success(endOfPaginationReached = true)
 
             }
             LoadType.APPEND -> {
 
-                val courseRemoteIndex = getCourseRemoteIndexForLastItem(state)
-                println("append last index ${courseRemoteIndex?.nextKey}  ${courseRemoteIndex?.prevKey}")
+                val nextIndex = getCourseRemoteIndexForLastItem(state)
+                println("next called $next")
+                if (nextIndex?.nextKey == null) {
+                    return MediatorResult.Success(endOfPaginationReached = true)
 
-
-                val nextKey = courseRemoteIndex?.nextKey
-
-                if (nextKey == null) {
-                    MediatorResult.Success(endOfPaginationReached = courseRemoteIndex != null)
                 }
-
-                nextKey
+                next ?: nextIndex.nextKey
             }
         }
 
         try {
-            println("page $page")
+            println("page $next")
 
 
-            val response: CourseListDto? = page?.let {
+            val response: CourseListDto = (next ?: COURSE_LIST_STARTING_PAGE_INDEX).let {
+
+                println("get ${it}")
                 courseListRepository.getCourseListRemoteResponse(
                     it,
                     pageSize,
@@ -81,16 +85,20 @@ class CourseListRemoteMediator(
             println("response $response")
 
 
-            val courseSize: Int? = (response?.count?.div(pageSize))
+            next = getIntFromUrl(response.next)
+            prev = getIntFromUrl(response.previous)
+
+
+            val courseSize: Int = (response.count.div(pageSize))
             println("response BODY $response")
             println("count size $courseSize")
-            val courses: List<CourseDetailsDto>? = response?.results
-            val isAtEnd: Boolean = response?.results?.isEmpty() == true
+            val courses: List<CourseDetailsDto>? = response.results
+            val isAtEnd: Boolean = response.results.isEmpty()
             println("is at an end $isAtEnd")
 
 
-            val prevKey = if (page == COURSE_LIST_STARTING_PAGE_INDEX) null else page?.minus(1)
-            val nextKey = if (isAtEnd) null else page?.plus(1)
+//            val prevKey = if (page == COURSE_LIST_STARTING_PAGE_INDEX) null else page?.minus(1)
+//            val nextKey = if (isAtEnd) null else (page ?: COURSE_LIST_STARTING_PAGE_INDEX).plus(1)
 
             CoroutineScope(Dispatchers.IO).launch {
 
@@ -104,8 +112,8 @@ class CourseListRemoteMediator(
                     it.id?.let { it1 ->
                         CourseRemoteIndexDbo(
                             it1,
-                            prevKey = prevKey,
-                            nextKey = nextKey
+                            prevKey = prev,
+                            nextKey = next
                         )
                     }
                 }
@@ -120,20 +128,30 @@ class CourseListRemoteMediator(
                 }
 
             }
-
-
-
-
             return MediatorResult.Success(endOfPaginationReached = isAtEnd)
 
 
+
+
+
+
+
+
         } catch (exception: IOException) {
-            println("exception $exception")
+            println("exception $exception ")
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
             println("exception $exception")
             return MediatorResult.Error(exception)
         }
+    }
+
+    private fun getIntFromUrl(url: String?): Int? {
+
+
+        return url?.split("https://www.udemy.com/api-2.0/courses/?language=en&page=")
+
+            ?.getOrNull(1)?.split("&page_size=")?.getOrNull(0)?.toString()?.toInt()
     }
 
     private suspend fun getCourseRemoteIndexForLastItem(state: PagingState<Int, CourseDetailsDbo>): CourseRemoteIndexDbo? {

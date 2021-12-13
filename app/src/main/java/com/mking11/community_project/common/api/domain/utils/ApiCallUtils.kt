@@ -17,6 +17,8 @@ suspend fun <T> safeApiCall(
             AppResult.Success(body)
         } else {
             val error: ErrorResult? = convertErrorResponse(response.errorBody())
+
+            println("error meessage $error")
             AppResult.Failure(null, error?.detail.toString())
         }
     } catch (e: Exception) {

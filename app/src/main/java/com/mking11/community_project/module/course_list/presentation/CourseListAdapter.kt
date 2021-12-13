@@ -6,9 +6,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.mking11.community_project.databinding.CourseListItemBinding
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
+import com.mking11.community_project.module.course_list.domain.model.CourseListInteraction
 
 
-class CourseListAdapter : PagingDataAdapter<CourseDetailsDbo, CourseViewHolder>(REPO_COMPARATOR) {
+class CourseListAdapter(private val interaction: CourseListInteraction) :
+    PagingDataAdapter<CourseDetailsDbo, CourseViewHolder>(REPO_COMPARATOR) {
 
     companion object {
         private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<CourseDetailsDbo>() {
@@ -37,6 +39,6 @@ class CourseListAdapter : PagingDataAdapter<CourseDetailsDbo, CourseViewHolder>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val binding =
             CourseListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CourseViewHolder(binding)
+        return CourseViewHolder(binding, interaction)
     }
 }

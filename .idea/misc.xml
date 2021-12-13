@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28067597354886115" />
+        <entry key="app/src/main/res/layout/course_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/course_list_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_coruse_list.xml" value="0.1574074074074074" />
+        <entry key="app/src/main/res/layout/instructor_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/repos_load_state_footer_view_item.xml" value="0.2" />
         <entry key="app/src/main/res/menu/top_menu.xml" value="0.19895833333333332" />
       </map>

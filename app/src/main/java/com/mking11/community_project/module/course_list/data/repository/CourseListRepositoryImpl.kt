@@ -47,6 +47,7 @@ class CourseListRepositoryImpl(
     }
 
     override fun insertCourseListIndex(list: List<CourseRemoteIndexDbo>) {
+
         list.forEach {
             insertCourseList(it)
         }

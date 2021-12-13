@@ -3,9 +3,8 @@ package com.mking11.community_project.module.course_details.data.data_source;
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
-import com.madtechet.musica.common.room.room_helper.contracts.IDaoEssentialsRepository
+import com.mking11.community_project.common.room.room_helper.contracts.IDaoEssentialsRepository
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
-import com.mking11.community_project.module.course_details.domain.model.ICourseDetails
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,7 +22,7 @@ abstract class CourseDao : IDaoEssentialsRepository<CourseDetailsDbo, String> {
     @Query("Delete from Course ")
     abstract suspend fun clear()
 
-    @Query("Select *From course ")
+    @Query("Select *From course order by timeStamp")
     abstract fun getCourses(): PagingSource<Int, CourseDetailsDbo>
 
 

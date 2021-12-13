@@ -1,9 +1,13 @@
 package com.mking11.community_project.module.course_details.domain.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.mking11.community_project.common.utils.getCurrentDate
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "Course")
+@Parcelize
 data class CourseDetailsDbo(
     override val _class: String? = null,
     @PrimaryKey
@@ -28,5 +32,6 @@ data class CourseDetailsDbo(
     override val order_in_results: String? = null,
     val curriculum_items: String? = null,
     override val headline: String? = null,
-    override val instructor_name: String? = null
-):ICourseDetails
+    override val instructor_name: String? = null,
+    val timeStamp: String = getCurrentDate()
+) : ICourseDetails,Parcelable

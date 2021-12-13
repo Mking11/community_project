@@ -18,7 +18,7 @@ class CourseListViewModel @Inject constructor(
     @ExperimentalPagingApi
     fun getCourseList(
         search: String?,
-        pageSize: Int = 10,
+        pageSize: Int = 20,
         category: String?,
         subcategory: String?,
         language: String = "en"
@@ -26,7 +26,7 @@ class CourseListViewModel @Inject constructor(
         val factory: () -> PagingSource<Int, CourseDetailsDbo> =
             { courseListUseCases.getCoursesDatabase() }
         return Pager(
-            config = PagingConfig(pageSize = pageSize, enablePlaceholders = false),
+            config = PagingConfig(pageSize = pageSize, enablePlaceholders = true),
             remoteMediator = courseListUseCases.getCoursesRemoteMediator(
                 pageSize,
                 category,
