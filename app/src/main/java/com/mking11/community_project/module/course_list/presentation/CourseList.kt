@@ -2,11 +2,15 @@ package com.mking11.community_project.module.course_list.presentation
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mking11.community_project.R
 import com.mking11.community_project.databinding.FragmentCoruseListBinding
@@ -26,6 +30,7 @@ class CourseList : Fragment(), CourseListInteraction {
     private lateinit var courseListBinding: FragmentCoruseListBinding
     private lateinit var adapter: CourseListAdapter
 
+    private lateinit var progressBar: ProgressBar
     val courseListViewModel: CourseListViewModel by viewModels()
 
 
@@ -36,7 +41,7 @@ class CourseList : Fragment(), CourseListInteraction {
         // Inflate the layout for this fragment
         courseListBinding = FragmentCoruseListBinding.inflate(inflater, container, false)
 
-
+        progressBar = courseListBinding.progressBar
         adapter = CourseListAdapter(this)
 
         val recycler = courseListBinding.recyclerCourse
@@ -47,23 +52,38 @@ class CourseList : Fragment(), CourseListInteraction {
 
 
 
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest {
+
+                progressBar.isVisible = it.refresh is LoadState.Loading
+            }
+
+
+        }
+
+        adapter.withLoadStateHeaderAndFooter(
+            header = ReposLoadStateAdapter(adapter::retry),
+            footer = ReposLoadStateAdapter(adapter::retry)
+        )
 
 
 
 
 
 
-        courseListBinding.button.visibility = View.GONE
+
+
         courseListBinding.progressBar.visibility = View.GONE
 
 
         setHasOptionsMenu(true)
 
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             courseListViewModel.getCourseList(
-                search = null, category = null, subcategory = null
+                search = courseListViewModel.search,
+                subcategory = courseListViewModel.subcategory,
+                category = null
             ).collectLatest {
-                println("new data $it")
                 adapter.submitData(it)
             }
         }
@@ -72,16 +92,6 @@ class CourseList : Fragment(), CourseListInteraction {
     }
 
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.top_menu, menu)
-
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onCourseItemClicked(courseDetailsDbo: CourseDetailsDbo) {
         requireView().findNavController()

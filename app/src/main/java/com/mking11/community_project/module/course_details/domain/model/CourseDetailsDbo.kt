@@ -33,5 +33,7 @@ data class CourseDetailsDbo(
     val curriculum_items: String? = null,
     override val headline: String? = null,
     override val instructor_name: String? = null,
-    val timeStamp: String = getCurrentDate()
+    val timeStamp: String = getCurrentDate(),
+    val subcategory:String?=null,
+    val search:String?=null,
 ) : ICourseDetails,Parcelable

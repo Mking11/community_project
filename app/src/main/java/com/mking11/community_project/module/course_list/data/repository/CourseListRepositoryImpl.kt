@@ -66,8 +66,8 @@ class CourseListRepositoryImpl(
         return courseRepository.getCoursePaging(title.lowercase(Locale.getDefault()))
     }
 
-    override fun getCourses(): PagingSource<Int, CourseDetailsDbo> {
-        return courseRepository.getCoursePaging()
+    override fun getCourses(search: String?,subcategory: String?): PagingSource<Int, CourseDetailsDbo> {
+        return courseRepository.getCoursePaging(search,subcategory)
     }
 
     override suspend fun getCourseListRemoteResponse(
@@ -90,9 +90,9 @@ class CourseListRepositoryImpl(
         )
     }
 
-    override fun insertList(list: List<CourseDetailsDto>) {
+    override fun insertList(list: List<CourseDetailsDto>,search: String?,subCategory: String?) {
         list.forEach {
-            courseRepository.insertCourse(it)
+            courseRepository.insertCourse(it,subCategory,search)
         }
     }
 

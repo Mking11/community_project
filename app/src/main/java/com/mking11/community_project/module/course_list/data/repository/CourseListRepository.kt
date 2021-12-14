@@ -29,7 +29,7 @@ interface CourseListRepository {
 
     fun getCourseBySearch(title:String): PagingSource<Int, CourseDetailsDbo>
 
-    fun getCourses():PagingSource<Int,CourseDetailsDbo>
+    fun getCourses(search: String?,subcategory:String?):PagingSource<Int,CourseDetailsDbo>
 
 
 
@@ -43,7 +43,7 @@ interface CourseListRepository {
         language: String?
     ): CourseListDto
 
-    fun insertList(list: List<CourseDetailsDto>)
+    fun insertList(list: List<CourseDetailsDto>,search: String?,subCategory: String?)
     suspend fun clearData()
     suspend fun clearKeys()
 

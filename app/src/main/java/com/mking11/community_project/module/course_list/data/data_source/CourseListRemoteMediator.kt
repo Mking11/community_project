@@ -42,11 +42,11 @@ class CourseListRemoteMediator(
 
 
             LoadType.REFRESH -> {
-                val courseRemoteIndex = getCourseRemoteIndexCurrentPosition(state)
-                println("refresh index $courseRemoteIndex")
-                courseRemoteIndex?.nextKey?.minus(1) ?: COURSE_LIST_STARTING_PAGE_INDEX
-//                println("refresh called")
-//                null
+//                val courseRemoteIndex = getCourseRemoteIndexCurrentPosition(state)
+//                println("refresh index $courseRemoteIndex")
+//                courseRemoteIndex?.nextKey?.minus(1) ?: COURSE_LIST_STARTING_PAGE_INDEX
+                println("refresh called")
+                null
             }
             LoadType.PREPEND -> {
                 println("prepend called")
@@ -58,10 +58,10 @@ class CourseListRemoteMediator(
                 val nextIndex = getCourseRemoteIndexForLastItem(state)
                 println("next called $next")
                 if (nextIndex?.nextKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = true)
+//                    return MediatorResult.Success(endOfPaginationReached = true)
 
                 }
-                next ?: nextIndex.nextKey
+                next ?: nextIndex?.nextKey
             }
         }
 
@@ -127,7 +127,7 @@ class CourseListRemoteMediator(
                 }
                 if (courses != null) {
 
-                    courseListRepository.insertList(courses)
+                    courseListRepository.insertList(courses,search, subCategory)
                 }
 
             }
@@ -186,7 +186,7 @@ class CourseListRemoteMediator(
         state: PagingState<Int, CourseDetailsDbo>
     ): CourseRemoteIndexDbo? {
         println("refresh index current positon ")
-        return state.lastItemOrNull()?.let { position ->
+        return state.anchorPosition?.let { position ->
             println("get course $position")
             state.closestItemToPosition(position)?.id?.let {
                 println("fetch course Id $it")

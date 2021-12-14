@@ -22,8 +22,11 @@ abstract class CourseDao : IDaoEssentialsRepository<CourseDetailsDbo, String> {
     @Query("Delete from Course ")
     abstract suspend fun clear()
 
-    @Query("Select *From course order by timeStamp")
-    abstract fun getCourses(): PagingSource<Int, CourseDetailsDbo>
+    @Query("Select *From course where subcategory like :subcategory or search like :search order by timeStamp")
+    abstract fun getCourses(
+        search: String?,
+        subcategory: String?
+    ): PagingSource<Int, CourseDetailsDbo>
 
 
 }

@@ -1,5 +1,6 @@
 package com.mking11.community_project.module.course_list.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -11,8 +12,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CourseListViewModel @Inject constructor(
-    private val courseListUseCases: CourseListUseCases
+    private val courseListUseCases: CourseListUseCases,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    val search = savedStateHandle.get<String>("search")
+    val subcategory = savedStateHandle.get<String>("subcategory")
 
 
     @ExperimentalPagingApi
@@ -24,7 +29,7 @@ class CourseListViewModel @Inject constructor(
         language: String = "en"
     ): Flow<PagingData<CourseDetailsDbo>> {
         val factory: () -> PagingSource<Int, CourseDetailsDbo> =
-            { courseListUseCases.getCoursesDatabase() }
+            { courseListUseCases.getCoursesDatabase(search, subcategory) }
         return Pager(
             config = PagingConfig(pageSize = pageSize, enablePlaceholders = true),
             remoteMediator = courseListUseCases.getCoursesRemoteMediator(

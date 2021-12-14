@@ -22,13 +22,13 @@ class CourseRepositoryImpl(
     DaoEssentialsRepositoryImpl<CourseDetailsDbo, String> {
 
     private val scope = ScopeShared(this.javaClass, CoroutineScope(Dispatchers.IO))
-    override fun insertCourse(courseDetailsDto: CourseDetailsDto) {
-        super.insertOrUpdate(courseDetailsDto.toDbo(), scope.scope, scope.handler, courseDao)
+    override fun insertCourse(courseDetailsDto: CourseDetailsDto,subcategory:String?,search: String?) {
+        super.insertOrUpdate(courseDetailsDto.toDbo(subcategory, search), scope.scope, scope.handler, courseDao)
     }
 
 
-    override fun getCoursePaging(): PagingSource<Int, CourseDetailsDbo> {
-        return courseDao.getCourses()
+    override fun getCoursePaging(search: String?,subcategory: String?): PagingSource<Int, CourseDetailsDbo> {
+        return courseDao.getCourses(search, subcategory)
     }
 
     override fun getCoursePaging(search: String): PagingSource<Int, CourseDetailsDbo> {

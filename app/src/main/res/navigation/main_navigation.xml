@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/courseList">
+    app:startDestination="@id/startingLayout">
 
     <fragment
         android:id="@+id/courseList"
@@ -13,6 +13,14 @@
         <action
             android:id="@+id/action_courseList_to_courseDetailsFragment"
             app:destination="@id/courseDetailsFragment" />
+        <argument
+            android:name="subcategory"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="search"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/courseDetailsFragment"
@@ -43,5 +51,13 @@
         <argument
             android:name="courseId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/startingLayout"
+        android:name="com.mking11.community_project.module.start_layout.StartingLayout"
+        android:label="StartingLayout" >
+        <action
+            android:id="@+id/action_startingLayout_to_courseList"
+            app:destination="@id/courseList" />
     </fragment>
 </navigation>

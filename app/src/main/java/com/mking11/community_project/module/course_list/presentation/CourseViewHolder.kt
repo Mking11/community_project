@@ -1,5 +1,6 @@
 package com.mking11.community_project.module.course_list.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.mking11.community_project.databinding.CourseListItemBinding
@@ -8,8 +9,11 @@ import com.mking11.community_project.module.course_list.domain.model.CourseListI
 
 class CourseViewHolder(
     private val binding: CourseListItemBinding,
-    private val courseListInteraction: CourseListInteraction
+    private val courseListInteraction: CourseListInteraction,
+
 ) : RecyclerView.ViewHolder(binding.root) {
+
+
 
 
     private val photo = binding.imageView

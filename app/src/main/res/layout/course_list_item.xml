@@ -8,6 +8,7 @@
     android:layout_marginTop="10dp"
     android:layout_marginEnd="5dp"
     android:elevation="4dp"
+    android:foreground="@drawable/selection_ripple"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 

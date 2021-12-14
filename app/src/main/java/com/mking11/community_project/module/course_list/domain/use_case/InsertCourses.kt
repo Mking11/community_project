@@ -5,6 +5,6 @@ import com.mking11.community_project.module.course_details.domain.model.CourseDe
 
 class InsertCourses(private val courseRepository: CourseRepository) {
      operator fun invoke(courseDetailsDto: CourseDetailsDto) {
-        courseRepository.insertCourse(courseDetailsDto = courseDetailsDto)
+//        courseRepository.insertCourse(courseDetailsDto = courseDetailsDto)
     }
 }

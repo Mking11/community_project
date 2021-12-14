@@ -8,8 +8,8 @@ import com.mking11.community_project.module.course_list.data.repository.CourseLi
 class GetCoursesDatabase(private val courseListRepository: CourseListRepository) {
 
 
-    operator fun invoke(): PagingSource<Int, CourseDetailsDbo> {
-        return courseListRepository.getCourses()
+    operator fun invoke(search:String?,subcategory:String?): PagingSource<Int, CourseDetailsDbo> {
+        return courseListRepository.getCourses(search, subcategory)
     }
 
 }
