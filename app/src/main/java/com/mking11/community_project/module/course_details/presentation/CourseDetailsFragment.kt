@@ -1,10 +1,8 @@
 package com.mking11.community_project.module.course_details.presentation
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Browser
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +13,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.mking11.community_project.common.api.domain.utils.BASE_URL_WEB
 import com.mking11.community_project.databinding.CourseDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -75,9 +75,33 @@ class CourseDetailsFragment : Fragment(), VisibleInstructorAdapter.CustomListene
             openChrome(viewModel.course?.url)
         }
 
+        toCourseReview.setOnClickListener {
+            handleNavigateToCourseReivew()
+        }
+
+        toCoursePublicList.setOnClickListener {
+            handNavigateToCourseContent()
+        }
+
 
 
         return binding.root
+    }
+
+    private fun handNavigateToCourseContent() {
+        viewModel.course?.id?.let {
+            requireView().findNavController().navigate(
+                CourseDetailsFragmentDirections.actionCourseDetailsFragmentToPublicCurriculum(it)
+            )
+        }
+    }
+
+    private fun handleNavigateToCourseReivew() {
+        viewModel.course?.id?.let {
+            requireView().findNavController().navigate(
+                CourseDetailsFragmentDirections.actionCourseDetailsFragmentToCourseReview(it)
+            )
+        }
     }
 
 
@@ -104,11 +128,15 @@ class CourseDetailsFragment : Fragment(), VisibleInstructorAdapter.CustomListene
 
     private fun openChrome(url: String?) {
         try {
-            val context: Context = requireActivity()
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.packageName)
-
+            println("url ${url}")
+            val uri = Uri.parse(
+                BASE_URL_WEB + url
+            )
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = uri
             startActivity(intent)
+
+
         } catch (e: Exception) {
             Log.e("CourseDetailsFragment", "openChrome: ${e}")
         }

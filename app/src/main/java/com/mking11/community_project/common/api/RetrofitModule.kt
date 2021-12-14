@@ -15,12 +15,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
-    private const val BASE_URL = "https://www.udemy.com/api-2.0/"
-    private val TAG = "RetrofitModule"
 
+    private val TAG = "RetrofitModule"
+    private const val BASE_URL = "https://www.udemy.com/api-2.0/"
     @Singleton
     @Provides
     fun providesGsonBuilder(): Gson {

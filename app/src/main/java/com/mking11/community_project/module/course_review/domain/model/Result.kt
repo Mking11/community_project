@@ -6,7 +6,7 @@ data class Result(
     val created: String,
     val id: Int,
     val modified: String,
-    val rating: Int,
+    val rating: Double,
     val user: User,
     val user_modified: String
 )

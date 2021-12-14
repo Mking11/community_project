@@ -21,5 +21,27 @@
         <argument
             android:name="course"
             app:argType="com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo" />
+        <action
+            android:id="@+id/action_courseDetailsFragment_to_courseReview"
+            app:destination="@id/courseReview" />
+        <action
+            android:id="@+id/action_courseDetailsFragment_to_publicCurriculum"
+            app:destination="@id/publicCurriculum" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseReview"
+        android:name="com.mking11.community_project.module.course_review.presentation.CourseReview"
+        android:label="CourseReview" >
+        <argument
+            android:name="courseId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/publicCurriculum"
+        android:name="com.mking11.community_project.module.public_course.presentation.PublicCurriculum"
+        android:label="PublicCurriculum" >
+        <argument
+            android:name="courseId"
+            app:argType="integer" />
     </fragment>
 </navigation>

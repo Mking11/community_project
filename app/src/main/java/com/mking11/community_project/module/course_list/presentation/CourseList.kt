@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagingApi::class)
 @AndroidEntryPoint
@@ -58,7 +59,7 @@ class CourseList : Fragment(), CourseListInteraction {
 
         setHasOptionsMenu(true)
 
-        lifecycleScope.launchWhenResumed{
+        lifecycleScope.launch{
             courseListViewModel.getCourseList(
                 search = null, category = null, subcategory = null
             ).collectLatest {

@@ -31,3 +31,4 @@ fun convertErrorResponse(
 }
 
 
+const val BASE_URL_WEB = "https://www.udemy.com"

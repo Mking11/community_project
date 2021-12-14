@@ -21,7 +21,7 @@ interface CourseListService {
     ):CourseListDto
 
     @GET("courses")
-    suspend fun getCourseListReponse(
+    suspend fun getCourseListResponse(
         @Query("page") page: Int?,
         @Query("page_size") pageSize: Int?,
         @Query("category") category: String?,

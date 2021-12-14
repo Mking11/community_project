@@ -10,10 +10,10 @@ import com.mking11.community_project.module.course_list.domain.model.CourseListI
 
 
 class CourseListAdapter(private val interaction: CourseListInteraction) :
-    PagingDataAdapter<CourseDetailsDbo, CourseViewHolder>(REPO_COMPARATOR) {
+    PagingDataAdapter<CourseDetailsDbo, CourseViewHolder>(CourseDetailsComparator) {
 
     companion object {
-        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<CourseDetailsDbo>() {
+        private val CourseDetailsComparator = object : DiffUtil.ItemCallback<CourseDetailsDbo>() {
             override fun areItemsTheSame(
                 oldItem: CourseDetailsDbo,
                 newItem: CourseDetailsDbo
@@ -31,7 +31,6 @@ class CourseListAdapter(private val interaction: CourseListInteraction) :
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null) {
-            holder.bind(item)
             holder.bind(item)
         }
     }

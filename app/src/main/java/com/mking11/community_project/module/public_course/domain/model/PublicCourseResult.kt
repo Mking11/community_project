@@ -1,4 +1,4 @@
-package com.mking11.community_project.module.public_course
+package com.mking11.community_project.module.public_course.domain.model
 
 
 data class PublicCourseResult(
@@ -8,6 +8,7 @@ data class PublicCourseResult(
     val sort_order: Int,
     val title: String,
     val description: String,
-    val is_published: Boolean
+    val is_published: Boolean,
+    val asset: Asset?
 )
 

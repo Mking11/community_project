@@ -8,7 +8,6 @@ import com.mking11.community_project.common.utils.AppResult
 import com.mking11.community_project.module.course_details.data.repository.CourseRepository
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDto
-import com.mking11.community_project.module.course_details.domain.model.ICourseDetails
 import com.mking11.community_project.module.course_list.data.data_source.CourseIndexDao
 import com.mking11.community_project.module.course_list.data.data_source.CourseListService
 import com.mking11.community_project.module.course_list.domain.model.CourseListDto
@@ -17,7 +16,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.util.*
 
 class CourseListRepositoryImpl(
@@ -37,7 +35,7 @@ class CourseListRepositoryImpl(
         language: String?
     ): Flow<AppResult<CourseListDto>> {
         return apiCall {
-            services.getCourseListReponse(page, pageSize, category, subCategory, search, price, language)
+            services.getCourseListResponse(page, pageSize, category, subCategory, search, price, language)
         }
 
     }

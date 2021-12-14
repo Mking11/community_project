@@ -33,3 +33,12 @@ private val DateFormatter: SimpleDateFormat = SimpleDateFormat("yyMMddHHmmssZ", 
 private val timeFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
 
 fun getCurrentDate(): String = DateFormatter.format(Calendar.getInstance().time)
+
+fun getDate(orderDate: String?): String? {
+    // date formatter
+    return try {
+        orderDate?.dropLast(15)
+    } catch (e: Exception) {
+        null
+    }
+}
