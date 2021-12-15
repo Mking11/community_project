@@ -5,7 +5,7 @@ import com.mking11.community_project.common.room.room_helper.contracts.IDaoEssen
 import com.mking11.community_project.module.course_list.domain.model.CourseRemoteIndexDbo
 
 @Dao
-abstract class CourseIndexDao : IDaoEssentialsRepository<CourseRemoteIndexDbo, String> {
+abstract class CourseIndexDao : IDaoEssentialsRepository<CourseRemoteIndexDbo> {
 
     @Query("Select * from CourseIndex where id=:id")
     abstract suspend fun getCourseList(id:Int):CourseRemoteIndexDbo?

@@ -4,7 +4,7 @@ import com.mking11.community_project.common.room.room_helper.contracts.IDaoEssen
 import kotlinx.coroutines.flow.Flow
 
 
-interface IDaoBasicRepository<Dbo, PrimaryType> : IDaoEssentialsRepository<Dbo, PrimaryType> {
+interface IDaoBasicRepository<Dbo, PrimaryType> : IDaoEssentialsRepository<Dbo> {
     suspend fun clear()
     fun getItems(): Flow<List<@JvmSuppressWildcards Dbo>>?
     suspend fun getItem(id: PrimaryType): Dbo?

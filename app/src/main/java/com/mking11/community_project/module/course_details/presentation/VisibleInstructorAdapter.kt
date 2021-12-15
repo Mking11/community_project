@@ -7,25 +7,25 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.mking11.community_project.databinding.InstructorLayoutBinding
-import com.mking11.community_project.module.course_details.domain.model.VisibleInstructorsDto
+import com.mking11.community_project.module.course_details.domain.model.VisibleInstructorsDbo
 
 class VisibleInstructorAdapter(private val customListeners: CustomListeners) :
     RecyclerView.Adapter<VisibleInstructorAdapter.VisibleInstructorViewHolder>() {
 
-    private val diffUtilItemCallback = object : DiffUtil.ItemCallback<VisibleInstructorsDto>() {
+    private val diffUtilItemCallback = object : DiffUtil.ItemCallback<VisibleInstructorsDbo>() {
 
         //pk is the primary key for the data class.
         //replace with any unique identifier of your specific data class.
         override fun areItemsTheSame(
-            oldItem: VisibleInstructorsDto,
-            newItem: VisibleInstructorsDto
+            oldItem: VisibleInstructorsDbo,
+            newItem: VisibleInstructorsDbo
         ): Boolean {
             return oldItem.display_name == newItem.display_name
         }
 
         override fun areContentsTheSame(
-            oldItem: VisibleInstructorsDto,
-            newItem: VisibleInstructorsDto
+            oldItem: VisibleInstructorsDbo,
+            newItem: VisibleInstructorsDbo
         ): Boolean {
             return oldItem == newItem
         }
@@ -50,7 +50,7 @@ class VisibleInstructorAdapter(private val customListeners: CustomListeners) :
         return listDiffer.currentList.size
     }
 
-    fun submitList(list: List<VisibleInstructorsDto>) {
+    fun submitList(list: List<VisibleInstructorsDbo>) {
         listDiffer.submitList(list)
     }
 
@@ -64,7 +64,7 @@ class VisibleInstructorAdapter(private val customListeners: CustomListeners) :
         val image = binding.instructorPhoto
         val title = binding.instructorTitle
         val name = binding.instructorName
-        fun bind(item: VisibleInstructorsDto) {
+        fun bind(item: VisibleInstructorsDbo) {
 
             //Custom onClick for whole item onClick
 

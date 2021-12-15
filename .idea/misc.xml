@@ -6,13 +6,16 @@
         <entry key="app/src/main/res/drawable/selection_ripple.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28067597354886115" />
         <entry key="app/src/main/res/layout/course_list_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/course_quiz_item.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/layout/course_review.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/course_review_item.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/coursepubliccirriculum.xml" value="0.20052083333333334" />
-        <entry key="app/src/main/res/layout/fragment_coruse_list.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_coruse_list.xml" value="0.2" />
         <entry key="app/src/main/res/layout/lecture_layout.xml" value="0.5" />
         <entry key="app/src/main/res/layout/repos_load_state_footer_view_item.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/starting_layout.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/starting_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/subcatagory_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/web_view.xml" value="0.22" />
         <entry key="app/src/main/res/menu/top_menu.xml" value="0.19895833333333332" />
       </map>
     </option>

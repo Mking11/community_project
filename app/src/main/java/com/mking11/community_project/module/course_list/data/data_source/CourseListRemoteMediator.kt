@@ -4,8 +4,10 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
+import com.mking11.community_project.module.course_details.data.repository.VisibleInstructionsRepository
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDto
+import com.mking11.community_project.module.course_details.domain.model.VisibleInstructorsDto
 import com.mking11.community_project.module.course_list.data.repository.CourseListRepository
 import com.mking11.community_project.module.course_list.domain.model.CourseListDto
 import com.mking11.community_project.module.course_list.domain.model.CourseRemoteIndexDbo
@@ -24,7 +26,8 @@ class CourseListRemoteMediator(
     private val search: String? = null,
     private val price: String = "price-free",
     private val language: String = "en",
-    private val courseListRepository: CourseListRepository
+    private val courseListRepository: CourseListRepository,
+    private val visibleInstructionsRepository: VisibleInstructionsRepository
 ) : RemoteMediator<Int, CourseDetailsDbo>() {
 
     var prev: Int? = null
@@ -58,7 +61,7 @@ class CourseListRemoteMediator(
                 val nextIndex = getCourseRemoteIndexForLastItem(state)
                 println("next called $next")
                 if (nextIndex?.nextKey == null) {
-//                    return MediatorResult.Success(endOfPaginationReached = true)
+                    return MediatorResult.Success(endOfPaginationReached = true)
 
                 }
                 next ?: nextIndex?.nextKey
@@ -107,8 +110,9 @@ class CourseListRemoteMediator(
 
                 if (loadType == LoadType.REFRESH) {
                     println("clearing tables")
-                    courseListRepository.clearKeys()
-                    courseListRepository.clearData()
+//                    courseListRepository.clearKeys()
+//                    courseListRepository.clearData()
+//                    visibleInstructionsRepository.clearTable()
 
                 }
                 val courseListIndex = courses?.mapNotNull {
@@ -127,17 +131,18 @@ class CourseListRemoteMediator(
                 }
                 if (courses != null) {
 
-                    courseListRepository.insertList(courses,search, subCategory)
+                    val visibleInstructors: List<Pair<List<VisibleInstructorsDto>?, Int?>> =
+                        courses.map {
+                            Pair(it.visible_instructors, it.id)
+                        }
+
+                    visibleInstructionsRepository.insertAll(visibleInstructors)
+
+                    courseListRepository.insertList(courses, search, subCategory)
                 }
 
             }
             return MediatorResult.Success(endOfPaginationReached = isAtEnd)
-
-
-
-
-
-
 
 
         } catch (exception: IOException) {

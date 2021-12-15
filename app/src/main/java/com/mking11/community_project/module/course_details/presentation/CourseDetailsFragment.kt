@@ -1,7 +1,5 @@
 package com.mking11.community_project.module.course_details.presentation
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.mking11.community_project.common.api.domain.utils.BASE_URL_WEB
 import com.mking11.community_project.databinding.CourseDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -113,11 +111,9 @@ class CourseDetailsFragment : Fragment(), VisibleInstructorAdapter.CustomListene
                 println("get course id ${it}")
                 viewModel.courseDetailsUseCases.getCoursesDetailsRemote(it).collect {
 
-                    if (it != null) {
-                        println("it not null")
+                    println("it not null")
 
-                        it.visible_instructors?.let { it1 -> adapter.submitList(it1) }
-                    }
+                    adapter.submitList(it)
 
                 }
             }
@@ -128,13 +124,22 @@ class CourseDetailsFragment : Fragment(), VisibleInstructorAdapter.CustomListene
 
     private fun openChrome(url: String?) {
         try {
-            println("url ${url}")
-            val uri = Uri.parse(
-                BASE_URL_WEB + url
-            )
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = uri
-            startActivity(intent)
+//            println("url ${url}")
+//            val uri = Uri.parse(
+//                BASE_URL_WEB + url
+//            )
+//            val intent = Intent(Intent.ACTION_VIEW)
+//            intent.data = uri
+//            startActivity(intent)
+
+
+            if (url != null) {
+                findNavController().navigate(
+                    CourseDetailsFragmentDirections.actionCourseDetailsFragmentToWebViewFragment(
+                        url
+                    )
+                )
+            }
 
 
         } catch (e: Exception) {

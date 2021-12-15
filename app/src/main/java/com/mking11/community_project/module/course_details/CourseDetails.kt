@@ -3,8 +3,11 @@ package com.mking11.community_project.module.course_details
 import com.mking11.community_project.common.room.CommunityDatabase
 import com.mking11.community_project.module.course_details.data.data_source.CourseDao
 import com.mking11.community_project.module.course_details.data.data_source.CourseDetailService
+import com.mking11.community_project.module.course_details.data.data_source.VisibleInstructorsDao
 import com.mking11.community_project.module.course_details.data.repository.CourseRepository
 import com.mking11.community_project.module.course_details.data.repository.CourseRepositoryImpl
+import com.mking11.community_project.module.course_details.data.repository.VisibleInstructionsRepository
+import com.mking11.community_project.module.course_details.data.repository.VisibleInstructionsRepositoryImpl
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsUseCases
 import com.mking11.community_project.module.course_details.domain.use_case.GetCoursesDetailsRemote
 import dagger.Module
@@ -28,26 +31,38 @@ object CourseDetails {
 
     @Provides
     @ViewModelScoped
-    fun provideCourseDetails(retrofit: Retrofit): CourseDetailService {
-        return retrofit.create(CourseDetailService::class.java)
+    fun provideVisibleDao(
+        database: CommunityDatabase
+    ): VisibleInstructorsDao {
+        return database.visibleInstructorsDao
     }
+
 
     @Provides
     @ViewModelScoped
     fun provideCourseRepository(
-        dao: CourseDao,
-        service: CourseDetailService
+        dao: CourseDao
     ): CourseRepository {
-        return CourseRepositoryImpl(courseDao = dao, courseDetailsService = service)
+        return CourseRepositoryImpl(courseDao = dao)
     }
 
 
     @Provides
     @ViewModelScoped
+    fun provideVisibleInstructor(visibleInstructorsDao: VisibleInstructorsDao): VisibleInstructionsRepository {
+        return VisibleInstructionsRepositoryImpl(visibleInstructorsDao)
+    }
+
+    @Provides
+    @ViewModelScoped
     fun provideCourseUseCases(
-        courseRepository: CourseRepository
+        visibleInstructorRepository: VisibleInstructionsRepository
     ): CourseDetailsUseCases =
-        CourseDetailsUseCases(getCoursesDetailsRemote = GetCoursesDetailsRemote(courseRepository))
+        CourseDetailsUseCases(
+            getCoursesDetailsRemote = GetCoursesDetailsRemote(
+                visibleInstructorRepository
+            )
+        )
 
 
 }

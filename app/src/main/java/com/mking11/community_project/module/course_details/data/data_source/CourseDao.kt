@@ -8,7 +8,7 @@ import com.mking11.community_project.module.course_details.domain.model.CourseDe
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class CourseDao : IDaoEssentialsRepository<CourseDetailsDbo, String> {
+abstract class CourseDao : IDaoEssentialsRepository<CourseDetailsDbo> {
 
     @Query("Select * From Course where id=:id")
     abstract suspend fun getItem(id: String): CourseDetailsDbo?

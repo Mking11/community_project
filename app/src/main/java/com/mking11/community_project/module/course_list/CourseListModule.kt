@@ -2,6 +2,7 @@ package com.mking11.community_project.module.course_list
 
 import com.mking11.community_project.common.room.CommunityDatabase
 import com.mking11.community_project.module.course_details.data.repository.CourseRepository
+import com.mking11.community_project.module.course_details.data.repository.VisibleInstructionsRepository
 import com.mking11.community_project.module.course_list.data.data_source.CourseIndexDao
 import com.mking11.community_project.module.course_list.data.data_source.CourseListService
 import com.mking11.community_project.module.course_list.data.repository.CourseListRepository
@@ -51,10 +52,15 @@ object CourseListModule {
     fun provideCourseListUseCases(
         courseRepository: CourseRepository,
         courseListRepository: CourseListRepository,
+        visibleInstructionsRepository: VisibleInstructionsRepository,
         database: CommunityDatabase
     ): CourseListUseCases {
         return CourseListUseCases(
-            getCoursesRemoteMediator = GetCoursesRemoteMediator(courseListRepository,database),
+            getCoursesRemoteMediator = GetCoursesRemoteMediator(
+                courseListRepository,
+                visibleInstructionsRepository,
+                database
+            ),
             insertCourses = InsertCourses(courseRepository),
             getCoursesDatabase = GetCoursesDatabase(courseListRepository),
             getCourseDatabaseSearch = GetCourseDatabaseSearch(courseListRepository)

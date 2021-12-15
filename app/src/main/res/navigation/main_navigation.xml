@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_courseDetailsFragment_to_publicCurriculum"
             app:destination="@id/publicCurriculum" />
+        <action
+            android:id="@+id/action_courseDetailsFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/courseReview"
@@ -59,5 +62,13 @@
         <action
             android:id="@+id/action_startingLayout_to_courseList"
             app:destination="@id/courseList" />
+    </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.mking11.community_project.module.web_view.WebViewFragment"
+        android:label="WebViewFragment" >
+        <argument
+            android:name="url"
+            app:argType="string" />
     </fragment>
 </navigation>

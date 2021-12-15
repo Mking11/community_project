@@ -1,23 +1,22 @@
 package com.mking11.community_project.module.course_list.presentation
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mking11.community_project.R
 import com.mking11.community_project.databinding.FragmentCoruseListBinding
 import com.mking11.community_project.module.course_details.domain.model.CourseDetailsDbo
 import com.mking11.community_project.module.course_list.domain.model.CourseListInteraction
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -76,21 +75,22 @@ class CourseList : Fragment(), CourseListInteraction {
         courseListBinding.progressBar.visibility = View.GONE
 
 
-        setHasOptionsMenu(true)
+
 
         lifecycleScope.launch {
+
+
             courseListViewModel.getCourseList(
                 search = courseListViewModel.search,
                 subcategory = courseListViewModel.subcategory,
                 category = null
-            ).collectLatest {
+            ).distinctUntilChanged().collectLatest {
                 adapter.submitData(it)
             }
         }
 
         return courseListBinding.root
     }
-
 
 
     override fun onCourseItemClicked(courseDetailsDbo: CourseDetailsDbo) {

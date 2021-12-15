@@ -18,12 +18,12 @@ class CourseViewHolder(
 
     private val photo = binding.imageView
     private val title = binding.textView2
-    private val price = binding.price
+
     fun bind(courseDetailsDbo: CourseDetailsDbo?) {
         if (courseDetailsDbo != null) {
             photo.load(courseDetailsDbo.image_480x270)
             title.text = courseDetailsDbo.title
-            price.text = courseDetailsDbo.price
+
         }
 
 

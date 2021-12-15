@@ -2,11 +2,13 @@ package com.mking11.community_project.module.course_list.domain.use_case
 
 import androidx.paging.ExperimentalPagingApi
 import com.mking11.community_project.common.room.CommunityDatabase
+import com.mking11.community_project.module.course_details.data.repository.VisibleInstructionsRepository
 import com.mking11.community_project.module.course_list.data.data_source.CourseListRemoteMediator
 import com.mking11.community_project.module.course_list.data.repository.CourseListRepository
 
 class GetCoursesRemoteMediator(
     private val courseListRepository: CourseListRepository,
+    private val visibleInstructorRepository: VisibleInstructionsRepository,
     private val database: CommunityDatabase
 ) {
 
@@ -24,7 +26,8 @@ class GetCoursesRemoteMediator(
             subCategory = subCategory,
             search = search,
             language = language,
-            courseListRepository = courseListRepository
+            courseListRepository = courseListRepository,
+            visibleInstructionsRepository = visibleInstructorRepository
 
         )
     }

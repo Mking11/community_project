@@ -1,4 +1,4 @@
-package com.madtechet.musica.common.room.room_helper.repositories
+package com.mking11.community_project.common.room.room_helper.repositories
 
 import com.madtechet.musica.common.room.room_helper.contracts.IDaoBasicRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 interface DaoBasicRepositoryImpl<OutPutType : Any, PrimaryKeyType> :
-    DaoEssentialsRepositoryImpl<OutPutType, PrimaryKeyType> {
+    DaoEssentialsRepositoryImpl<OutPutType> {
     fun clearTable(
         scope: CoroutineScope,
         handler: CoroutineExceptionHandler,

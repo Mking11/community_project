@@ -1,5 +1,7 @@
 package com.mking11.community_project.module.course_details.domain.model
 
+import com.mking11.community_project.module.public_course.domain.model.PublicCourseList
+
 data class CourseDetailsDto(
     override val _class: String? = null,
     override val id: Int? = null,
@@ -23,8 +25,6 @@ data class CourseDetailsDto(
     override val headline: String? = null,
     override val instructor_name: String? = null,
     val visible_instructors: List<VisibleInstructorsDto>? = null,
-    val curriculum_items: List<String>? = null,
-    val curriculum_lectures: List<String>? = null
 ) : ICourseDetails {
     fun toDbo(subcategory: String?, search: String?): CourseDetailsDbo {
         return CourseDetailsDbo(

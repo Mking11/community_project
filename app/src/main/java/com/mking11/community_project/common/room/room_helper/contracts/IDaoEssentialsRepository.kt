@@ -3,7 +3,7 @@ package com.mking11.community_project.common.room.room_helper.contracts
 import androidx.room.*
 
 
-interface IDaoEssentialsRepository<Dbo, PrimaryType> {
+interface IDaoEssentialsRepository<Dbo> {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertItem(item: Dbo): Long
 

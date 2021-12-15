@@ -1,6 +1,7 @@
 package com.madtechet.musica.common.room.room_helper.repositories
 
 import com.madtechet.musica.common.room.room_helper.contracts.IDaoCompleteRepository
+import com.mking11.community_project.common.room.room_helper.repositories.DaoBasicRepositoryImpl
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

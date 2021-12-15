@@ -9,10 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface CourseRepository {
      fun insertCourse(courseDetailsDto: CourseDetailsDto,subcategory:String?,search: String?)
-
     fun getCoursePaging(search: String?,subcategory: String?): PagingSource<Int, CourseDetailsDbo>
     fun getCoursePaging(search:String): PagingSource<Int, CourseDetailsDbo>
-    fun getCourseDetails(id:Int): Flow<AppResult<CourseDetailsDto>>
     suspend fun clearCourseTable()
 
 }

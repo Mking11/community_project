@@ -1,7 +1,7 @@
 package com.mking11.community_project.module.course_list.data.repository
 
 import androidx.paging.PagingSource
-import com.madtechet.musica.common.room.room_helper.repositories.DaoBasicRepositoryImpl
+import com.mking11.community_project.common.room.room_helper.repositories.DaoBasicRepositoryImpl
 import com.mking11.community_project.common.api.domain.utils.apiCall
 import com.mking11.community_project.common.room.room_helper.ScopeShared
 import com.mking11.community_project.common.utils.AppResult
