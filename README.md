@@ -16,4 +16,4 @@ Community Project
 <br>![Alt text](Pics/photo_2021-12-22_11-16-16.jpg "Course Selection")</br>
 <br>![Alt text](Pics/photo_2021-12-22_11-16-23.jpg "Course Details")</br>
 <br>![Alt text](Pics/photo_2021-12-22_11-16-35.jpg "Review Page")</br>
-<br>![Alt text](Pics/photo_2021-12-22_11-16-35.jpg "Course Content")</br>
+<br>![Alt text](Pics/photo_2021-12-22_11-16-28.jpg "Course Content")</br>
