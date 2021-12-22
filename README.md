@@ -2,16 +2,18 @@
 
 Community Project 
 
-With -> remote mediator
-      ->pagging 3
-       ->retorfit api calls
-       -> mvvvm architecture
-       -> hilt depedency injection
-       ->room db 
-
-
-![Alt text](https://drive.google.com/file/d/14TzLcZcC_vhgcshikSMnKq3iZTwcVe3s/view?usp=sharing "Start Page")
-![Alt text](https://drive.google.com/file/d/14TzLcZcC_vhgcshikSMnKq3iZTwcVe3s/view?usp=sharing "Course Selection")
-![Alt text](https://drive.google.com/file/d/14TzLcZcC_vhgcshikSMnKq3iZTwcVe3s/view?usp=sharing "Course Details")
-![Alt text](https://drive.google.com/file/d/1zPxOtmMM5m_d03cB0jDgH24QzC3M3Ed5/view?usp=sharing "Review Page")
-![Alt text](https://drive.google.com/file/d/1rC0B23xHC4t01tjYiQc92L_ayE7b-FfK/view?usp=sharing "Course Content")
+<br>With-> remote mediator</br>
+     <br> -> pagging 3 </br>
+     <br>->retorfit api calls</br>
+     <br>-> mvvvm architecture</br>
+     <br>-> hilt depedency injection<br>
+     <br>->room db</br>
+     <br>-> Jetpack naviagatoin</br>
+     <br>->View Binding</br>
+     <br>->Simple web view</br>
+     
+<br>![Alt text](Pics/photo_2021-12-22_11-16-13.jpg "Start Page")</br>
+<br>![Alt text](Pics/photo_2021-12-22_11-16-16.jpg "Course Selection")</br>
+<br>![Alt text](Pics/photo_2021-12-22_11-16-23.jpg "Course Details")</br>
+<br>![Alt text](Pics/photo_2021-12-22_11-16-35.jpg "Review Page")</br>
+<br>![Alt text](Pics/photo_2021-12-22_11-16-35.jpg "Course Content")</br>
