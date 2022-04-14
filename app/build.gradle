@@ -5,6 +5,17 @@ plugins {
     id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
+    id "org.sonarqube" version "3.3"
+}
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.branch", "master"
+        property "sonar.projectKey", "Mking11_community_project"
+        property "sonar.organization", "mking11"
+        property "sonar.login", "testtoken"
+    }
 }
 
 android {

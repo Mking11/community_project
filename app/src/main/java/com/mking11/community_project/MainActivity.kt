@@ -8,7 +8,7 @@ import com.mking11.community_project.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class kMainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
@@ -21,4 +21,8 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         setContentView(binding.root)
     }
+
+    //test for review
+
+    // test for review
 }
