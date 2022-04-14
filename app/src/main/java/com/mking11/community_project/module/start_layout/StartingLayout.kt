@@ -38,7 +38,7 @@ class StartingLayout : Fragment(), StartingLayoutAdapter.CustomListeners {
             search()
         }
         searchInput.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ) {
                 search()
             }
             true
