@@ -22,11 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    //test for review
-
-    // test
-
-
-    // some random change from the main branch
+    // the main branch
     // test for review
+    // something changed something to compare
 }
