@@ -24,5 +24,5 @@ class MainActivity : AppCompatActivity() {
 
     // the main branch
     // test for review
-    // something changed something to compare
+    // something changed something to compare // and another change
 }
