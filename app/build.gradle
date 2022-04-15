@@ -10,6 +10,8 @@ plugins {
 
 }
 
+
+
 sonarqube {
     properties {
         property "sonar.host.url", "https://sonarcloud.io"
@@ -20,12 +22,9 @@ sonarqube {
     }
 }
 
-
 apply {
-    from("jacoco.gradle")
+    from('jacoco.gradle')
 }
-
-
 
 android {
     compileSdk 31
@@ -40,13 +39,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 
     buildTypes {
 
-
+debug{
+    testCoverageEnabled true
+}
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -76,8 +77,6 @@ dependencies {
 
     //coil
     implementation("io.coil-kt:coil:1.4.0")
-
-
 
 
     //coroutine
