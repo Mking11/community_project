@@ -26,5 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     // test
 
+
+    // some random change from the main branch
     // test for review
 }
