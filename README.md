@@ -2,13 +2,13 @@
 
 Community Project 
 
-<br>With-> remote mediator</br>
-     <br> -> pagging 3 </br>
-     <br>->retorfit api calls</br>
-     <br>-> mvvvm architecture</br>
-     <br>-> hilt depedency injection<br>
+<br>With->remote mediator</br>
+     <br>->paging 3 </br>
+     <br>->retrofit api calls</br>
+     <br>->mvvvm architecture</br>
+     <br>->hilt dependency injection<br>
      <br>->room db</br>
-     <br>-> Jetpack naviagation</br>
+     <br>->Jetpack navigation</br>
      <br>->View Binding</br>
      <br>->Simple web view</br>
      
