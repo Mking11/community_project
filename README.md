@@ -8,7 +8,7 @@ Community Project
      <br>-> mvvvm architecture</br>
      <br>-> hilt depedency injection<br>
      <br>->room db</br>
-     <br>-> Jetpack naviagatoin</br>
+     <br>-> Jetpack naviagation</br>
      <br>->View Binding</br>
      <br>->Simple web view</br>
      
